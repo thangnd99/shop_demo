@@ -26,7 +26,7 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<void> removeToken() async {
     // return SecureStorageHelper.instance.removeToken();
-    return null;
+    return;
   }
 
   @override

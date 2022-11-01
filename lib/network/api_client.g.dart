@@ -19,113 +19,76 @@ class _ApiClient implements ApiClient {
   String? baseUrl;
 
   @override
-  Future<TokenEntity> authLogin(body) async {
+  Future<List<ProductEntity>> getAllProduct() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(body);
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<TokenEntity>(Options(
-      method: 'POST',
+        .fetch<List<dynamic>>(_setStreamType<List<ProductEntity>>(Options(
+      method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/login',
+              '/products',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = TokenEntity.fromJson(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) => ProductEntity.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 
   @override
-  Future<dynamic> signOut(body) async {
+  Future<List<String>> getAllCategories() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(body);
-    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/logout',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data;
-    return value;
-  }
-
-  @override
-  Future<ArrayResponse<NotificationEntity>> getNotifications(
-    page,
-    pageSize,
-  ) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'page': page,
-      r'pageSize': pageSize,
-    };
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ArrayResponse<NotificationEntity>>(Options(
+    final _result =
+        await _dio.fetch<List<dynamic>>(_setStreamType<List<String>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/notifications',
+              '/products/categories',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ArrayResponse<NotificationEntity>.fromJson(
-      _result.data!,
-      (json) => NotificationEntity.fromJson(json as Map<String, dynamic>),
-    );
+    final value = _result.data!.cast<String>();
     return value;
   }
 
   @override
-  Future<ArrayResponse<MovieEntity>> getMovies(
-    apiKey,
-    page,
-  ) async {
+  Future<List<ProductEntity>> getProductsByCategory({categoryName}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'api_key': apiKey,
-      r'page': page,
-    };
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ArrayResponse<MovieEntity>>(Options(
+    final _result = await _dio
+        .fetch<List<dynamic>>(_setStreamType<List<ProductEntity>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/3/discover/movie',
+              '/products/category/${categoryName}',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ArrayResponse<MovieEntity>.fromJson(
-      _result.data!,
-      (json) => MovieEntity.fromJson(json as Map<String, dynamic>),
-    );
+    var value = _result.data!
+        .map((dynamic i) => ProductEntity.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 

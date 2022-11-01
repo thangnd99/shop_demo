@@ -10,21 +10,11 @@ class ApiInterceptors extends InterceptorsWrapper {
     final method = options.method;
     final uri = options.uri;
     final data = options.data;
-    if (method == 'GET') {
-      logger.log(
-          "✈️ REQUEST[$method] => PATH: $uri \n Token: ${options.headers}",
-          printFullText: true);
-    } else {
-      try {
-        logger.log(
-            "✈️ REQUEST[$method] => PATH: $uri  \n DATA: ${jsonEncode(data)}",
-            printFullText: true);
-      } catch (e) {
-        logger.log(
-            "✈️ REQUEST[$method] => PATH: $uri  \n DATA: $data",
-            printFullText: true);
-      }
-    }
+    options.headers['content-type'] = "application/json; charset=utf-8";
+    // options.headers['accept'] = 'application/json';
+    logger.log(
+        "✈️ REQUEST[$method] => PATH: $uri  \n DATA: ${jsonEncode(data)}",
+        printFullText: true);
     super.onRequest(options, handler);
   }
 

@@ -3,14 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:shop_demo_app/configs/app_configs.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:shop_demo_app/repositories/product_repository.dart';
 
 import 'blocs/app_cubit.dart';
 import 'common/app_themes.dart';
 import 'network/api_client.dart';
 import 'network/api_util.dart';
 import 'repositories/auth_repository.dart';
-import 'repositories/movie_repository.dart';
-import 'repositories/user_repository.dart';
 import 'router/route_config.dart';
 
 class MyApp extends StatefulWidget {
@@ -47,20 +46,15 @@ class _MyAppState extends State<MyApp> {
         RepositoryProvider<AuthRepository>(create: (context) {
           return AuthRepositoryImpl(apiClient: _apiClient);
         }),
-        RepositoryProvider<MovieRepository>(create: (context) {
-          return MovieRepositoryImpl(apiClient: _apiClient);
-        }),
-        RepositoryProvider<UserRepository>(create: (context) {
-          return UserRepositoryImpl(apiClient: _apiClient);
+        RepositoryProvider<ProductRepository>(create: (context) {
+          return ProductRepositoryImpl(apiClient: _apiClient);
         }),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AppCubit>(create: (context) {
-            final userRepo = RepositoryProvider.of<UserRepository>(context);
             final authRepo = RepositoryProvider.of<AuthRepository>(context);
             return AppCubit(
-              userRepo: userRepo,
               authRepo: authRepo,
             );
           }),
@@ -73,6 +67,7 @@ class _MyAppState extends State<MyApp> {
               },
               child: GetMaterialApp(
                 title: AppConfigs.appName,
+                debugShowCheckedModeBanner: false,
                 theme: AppThemes(
                   isDarkMode: false,
                 ).theme,

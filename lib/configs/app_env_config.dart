@@ -19,11 +19,11 @@ extension EnvironmentExt on Environment {
   String get baseUrl {
     switch (this) {
       case Environment.dev:
-        return "https://api.themoviedb.org";
+        return "https://fakestoreapi.com";
       case Environment.stg:
-        return "https://api.themoviedb.org";
+        return "https://fakestoreapi.com";
       case Environment.prod:
-        return "https://api.themoviedb.org";
+        return "https://fakestoreapi.com";
     }
   }
 }

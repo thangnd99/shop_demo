@@ -5,7 +5,7 @@ import 'app_env_config.dart';
 class AppConfigs {
   AppConfigs._();
 
-  static const String appName = "Newwave Solution JSC";
+  static const String appName = "Shop demo";
 
   static Environment env = Environment.prod;
 

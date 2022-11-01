@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shop_demo_app/common/app_images.dart';
 import 'package:shop_demo_app/repositories/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../repositories/user_repository.dart';
 import 'splash_cubit.dart';
 
 class SplashPage extends StatelessWidget {
@@ -15,7 +13,6 @@ class SplashPage extends StatelessWidget {
       create: (context) {
         return SplashCubit(
           authRepo: RepositoryProvider.of<AuthRepository>(context),
-          userRepo: RepositoryProvider.of<UserRepository>(context),
         );
       },
       child: const SplashChildPage(),
@@ -39,17 +36,13 @@ class _SplashChildPageState extends State<SplashChildPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Center(
-            child: SizedBox(
-              height: 200,
-              width: 200,
-              child: Image.asset(AppImages.icLogoTransparent),
-            ),
-          ),
-        ],
+    return const Scaffold(
+      body: Center(
+        child: SizedBox(
+          height: 200,
+          width: 200,
+          child: Icon(Icons.ac_unit_sharp),
+        ),
       ),
     );
   }

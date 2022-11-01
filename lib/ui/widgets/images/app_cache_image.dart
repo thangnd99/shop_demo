@@ -26,7 +26,7 @@ class AppCacheImage extends StatelessWidget {
       width: width ?? double.infinity,
       height: height ?? double.infinity,
       decoration: BoxDecoration(
-        color: Colors.grey,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(borderRadius ?? 0),
       ),
       child: isValidUrl
@@ -71,7 +71,7 @@ class AppCacheImage extends StatelessWidget {
         child: Center(
           child: Image.asset(
             AppImages.bgImagePlaceholder,
-            fit: BoxFit.fitHeight,
+            fit: fit,
           ),
         ),
       ),

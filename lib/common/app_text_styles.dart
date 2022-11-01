@@ -26,6 +26,11 @@ class AppTextStyle {
   static final blackS18Bold = blackS18.copyWith(fontWeight: FontWeight.bold);
   static final blackS18W800 = blackS18.copyWith(fontWeight: FontWeight.w800);
 
+  //s24
+  static final blackS24 = black.copyWith(fontSize: 24);
+  static final blackS24Bold = blackS24.copyWith(fontWeight: FontWeight.bold);
+  static final blackS24W800 = blackS24.copyWith(fontWeight: FontWeight.w800);
+
   ///White
   static const white = TextStyle(color: Colors.white);
 

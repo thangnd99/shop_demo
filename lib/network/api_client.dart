@@ -1,10 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:shop_demo_app/models/response/array_response.dart';
+import 'package:shop_demo_app/models/entities/product/product_entity.dart';
 import 'package:retrofit/retrofit.dart';
-
-import '../models/entities/movie_entity.dart';
-import '../models/entities/notification/notification_entity.dart';
-import '../models/entities/token_entity.dart';
 
 part 'api_client.g.dart';
 
@@ -12,24 +8,14 @@ part 'api_client.g.dart';
 abstract class ApiClient {
   factory ApiClient(Dio dio, {String baseUrl}) = _ApiClient;
 
-  ///User
-  @POST("/login")
-  Future<TokenEntity> authLogin(@Body() Map<String, dynamic> body);
+  @GET('/products')
+  Future<List<ProductEntity>> getAllProduct();
 
-  @POST("/logout")
-  Future<dynamic> signOut(@Body() Map<String, dynamic> body);
+  @GET('/products/categories')
+  Future<List<String>> getAllCategories();
 
-  /// Notification
-  @GET("/notifications")
-  Future<ArrayResponse<NotificationEntity>> getNotifications(
-    @Query('page') int page,
-    @Query('pageSize') int pageSize,
-  );
-
-  /// Movie
-  @GET("/3/discover/movie")
-  Future<ArrayResponse<MovieEntity>> getMovies(
-    @Query('api_key') String apiKey,
-    @Query('page') int page,
-  );
+  @GET('/products/category/{category_name}')
+  Future<List<ProductEntity>> getProductsByCategory({
+    @Path('category_name') String? categoryName,
+  });
 }
